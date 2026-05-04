@@ -1,0 +1,31 @@
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>{{ form.task.label }}:</p>{{ form.task }}
+    {{ form.submit }}
+</form>
+{% if todo_items %}
+{% for todo_item in todo_items %}
+<ul>
+    <li>{% if todo_item.is_completed %}
+        <s>{{ todo_item.task }}</s>  ({{ todo_item.date_heading() }}) 
+        {% else %}
+        {{ todo_item.task }} ({{ todo_item.date_heading() }})
+        {% endif %}
+
+        <form action="{{ url_for('delete', task_id=todo_item.id) }}", method="post">
+            {{ form.hidden_tag() }} 
+            {{ form.submit(value='Delete') }}
+        </form>
+        <form action="{{ url_for('toggle_task', task_id=todo_item.id) }} " method="post">
+            {{ form.hidden_tag() }}
+            {{ form.submit(value='Completed') }}
+        </form>
+    </li>
+</ul>
+
+{% endfor %}
+{% else %}
+<p>No Todo Items yet</p>
+{% endif %}
+{% endblock %}
