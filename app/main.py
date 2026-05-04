@@ -1,8 +1,8 @@
-from app import app
 from flask import render_template, redirect, url_for
 from app.forms import DeleteTaskForm, TodoForm
 from app.models import Todo
-from app import db
+from app import app, db
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
